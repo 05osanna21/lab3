@@ -1,6 +1,7 @@
 package seleniumTest;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,7 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.Color;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,6 +19,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import static org.openqa.selenium.support.ui.ExpectedCondition.*;
+
 
 public class InputForm{;
     WebDriver driver;
@@ -54,6 +59,17 @@ public class InputForm{;
     By waitDatePickersBy = By.xpath("//li[@class='tree-branch']//a[text()='Date pickers']");
     By bootstrapDatePickerBy = By.xpath("//li[@class='tree-branch']//a[text()='Bootstrap Date Picker']");
     By inputGroupAddonBy = By.xpath("//span[@class='input-group-addon']//i[@class='glyphicon glyphicon-th']");
+    //test_9
+    By tableBy = By.xpath("//li[@class='tree-branch']//a[text()='Table']");
+    By tableDataSearchBy = By.xpath("//li[@class='tree-branch']//a[text()='Table Data Search']");
+    By taskTableFilterBy = By.xpath("//input[@id='task-table-filter']");
+    By actualResualtBy_9 = By.xpath("//table[@id='task-table']");
+    //test_10
+    By tableFilterBy = By.xpath("//li[@class='tree-branch']//a[text()='Table Filter ']");
+    By orangeBy = By.xpath("//button[text()='Orange']");
+    By expBy = By.xpath("//i[@style='color:orange;']");
+    By colorOrangeBy = By.xpath("//div[@class=\"tablefilter\"]//a[@class=\"pull-left\"]//i[@style=\"color:orange;\"]");
+
 
 
 
@@ -168,11 +184,11 @@ public class InputForm{;
         wait.until(ExpectedConditions.visibilityOfElementLocated(waitAjaxFormSubmitBy)).click();
         WebElement submitButton = driver.findElement(buttonSubmitBy);
         submitButton.click();
-        String expectedColor = "1px solid rgb(255, 0, 0)";
+        String expectedColor = "255, 0, 0";
         String actualResualt = driver.findElement(colorValueBy).getCssValue("border");
         Assert.assertEquals(expectedColor,actualResualt);
     }
-    @Test
+  /*  @Test
     public void test_8(){
         WebElement datePickers = driver.findElement(waitDatePickersBy);
         datePickers.click();
@@ -187,7 +203,34 @@ public class InputForm{;
         String expectedResualt = "Sat Nov 07 22:43:19 EET 2020";
         String actualResual = new String(yesterday.toString());
         Assert.assertEquals(expectedResualt,actualResual);
+    }*/
+    @Test
+    public void test_9(){
+        WebElement table = driver.findElement(tableBy);
+        table.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(tableDataSearchBy)).click();
+        WebElement taskTableFilter = driver.findElement(taskTableFilterBy);
+        taskTableFilter.click();
+        taskTableFilter.sendKeys("Emily John");
+        taskTableFilter.click();
+        String expectedR = "4 Bootstrap 3 Emily John in progress";
+        String actualResualt = driver.findElement(actualResualtBy_9).getText();
+        Assertions.assertThat(actualResualt).contains(expectedR);
+    }
+    @Test
+    public void test_10(){
+        WebElement table = driver.findElement(tableBy);
+        table.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(tableFilterBy)).click();
+        WebElement exp = driver.findElement(expBy);
+        WebElement orange = driver.findElement(orangeBy);
+        orange.click();
+        List<WebElement> colorOrange = driver.findElements(By.xpath("//div[@class=\"tablefilter\"]//a[@class=\"pull-left\"]//i[@style=\"color:orange;\"]"));
+        Assertions.assertThat(colorOrange).contains(exp);
+    }
 
+    @Test
+    public void test_11(){
 
     }
    @After
