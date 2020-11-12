@@ -127,8 +127,6 @@ public class InputForm{;
         WebElement getValue = driver.findElement(getValueBy);
         getValue.click();
         String female_5_15 = "Sex : Female" + "Age group: 5 - 15";
-        //String Sex = "Sex : Female";
-        //String Age = " Age group: 5 - 15";
         String actualResual = driver.findElement(male_15_50By).getText();
         Assert.assertNotEquals(female_5_15,male_15_50By);
     }
@@ -137,8 +135,6 @@ public class InputForm{;
         WebElement inputFormOption = driver.findElement(inputFormOptionBy);
         inputFormOption.click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(waitSelectDropdownListBy)).click();
-        //Select dropdown = new Select(driver.findElement(By.xpath("dropdownBy")));
-        //dropdown.selectByVisibleText("Friday");
         String daySelect = "Day selected :- Friday";
         WebElement dropdown = driver.findElement(dropdownBy);
         dropdown.click();
@@ -168,7 +164,7 @@ public class InputForm{;
         wait.until(ExpectedConditions.visibilityOfElementLocated(waitAjaxFormSubmitBy)).click();
         WebElement submitButton = driver.findElement(buttonSubmitBy);
         submitButton.click();
-        String expectedColor = "1px solid rgb(255, 0, 0)";
+        String expectedColor = "rgb(255, 0, 0)";
         String actualResualt = driver.findElement(colorValueBy).getCssValue("border");
         Assert.assertEquals(expectedColor,actualResualt);
     }

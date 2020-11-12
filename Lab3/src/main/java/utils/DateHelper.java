@@ -8,6 +8,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class DateHelper {
 
+
     public static DateTime getDateAsDaysFromNow(int fromNow) {
         DateTime dateTime = new DateTime();
         LocalDate localDate = dateTime.toLocalDate();
